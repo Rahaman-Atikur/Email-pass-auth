@@ -1,4 +1,6 @@
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 import React from 'react';
+import { auth } from '../firebase';
 
 const Register = () => {
     const handleRegister = e => {
@@ -7,6 +9,14 @@ const Register = () => {
         let email = e.target.email.value;
         let password = e.target.password.value;
         console.log(email, password);
+
+        createUserWithEmailAndPassword(auth, email, password)
+            .then((result) => {
+                console.log(result);
+            })
+            .catch((error) => {
+                console.log(error);
+            })
     }
     return (
         <div className='mx-auto'>
@@ -30,7 +40,7 @@ const Register = () => {
                     </svg>
                     <input
                         name='password'
-                        
+
                     />
                 </label>
                 <p className="validator-hint hidden">
