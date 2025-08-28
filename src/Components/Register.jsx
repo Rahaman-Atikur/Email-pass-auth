@@ -9,7 +9,7 @@ const Register = () => {
         console.log(email, password);
     }
     return (
-        <div>
+        <div className='mx-auto'>
             <form onSubmit={handleRegister}>
                 <input name='email' type="text" placeholder="Email" className="input input-xl" />
                 <br />
@@ -30,12 +30,7 @@ const Register = () => {
                     </svg>
                     <input
                         name='password'
-                        type="password"
-                        required
-                        placeholder="Password"
-                        minlength="8"
-                        pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                        title="Must be more than 8 characters, including number, lowercase letter, uppercase letter"
+                        
                     />
                 </label>
                 <p className="validator-hint hidden">
