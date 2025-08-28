@@ -6,15 +6,15 @@ const Signup = () => {
     const [errorMessege, setErrorMessege] = useState('');
     const handleSignup = (e) => {
         e.preventDefault();
-        const email = e.target.value.email;
-        const password = e.target.value.password;
+        const email = e.target.email.value;
+        const password = e.target.password.value;
         createUserWithEmailAndPassword(auth, email, password)
             .then((result) => {
                 console.log(result);
             })
             .catch((error) => {
                 console.log(error);
-                setErrorMessege(error);
+                setErrorMessege(error.message);
             })
 
     }
@@ -36,7 +36,7 @@ const Signup = () => {
                                 <button className="btn btn-neutral mt-4">Sign Up</button>
                             </form>
                             {
-                                errorMessege && <p>{errorMessege}</p>
+                                errorMessege && <p className='text-red-500'>{errorMessege}</p>
                             }
                         </div>
                     </div>
