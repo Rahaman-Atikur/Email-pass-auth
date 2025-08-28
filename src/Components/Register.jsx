@@ -1,7 +1,6 @@
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import React from 'react';
 import { auth } from '../firebase';
-
 const Register = () => {
     const handleRegister = e => {
         e.preventDefault();
@@ -40,7 +39,6 @@ const Register = () => {
                     </svg>
                     <input
                         name='password'
-
                     />
                 </label>
                 <p className="validator-hint hidden">
