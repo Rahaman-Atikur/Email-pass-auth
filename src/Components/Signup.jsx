@@ -1,23 +1,35 @@
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import React, { useState } from 'react';
-import { auth } from '../firebase';
-
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import React, { useState } from "react";
+import { auth } from "../firebase";
 const Signup = () => {
-    const [errorMessege, setErrorMessege] = useState('');
+    const [errorMessege, setErrorMessege] = useState("");
+    const [success, setSuccess] = useState(false);
+
+
     const handleSignup = (e) => {
         e.preventDefault();
         const email = e.target.email.value;
         const password = e.target.password.value;
+        setErrorMessege("");
+        setSuccess(true);
+        //Password Validation
+        const regExpression = /^\d{6}$/;
+        if (regExpression.test(password) === false) {
+            setErrorMessege('Please Try Again');
+            return;
+        }
         createUserWithEmailAndPassword(auth, email, password)
             .then((result) => {
                 console.log(result);
+                setSuccess(true);
             })
             .catch((error) => {
                 console.log(error);
                 setErrorMessege(error.message);
-            })
+            });
+    };
 
-    }
+    
     return (
         <div>
             <div className="hero bg-base-200 min-h-screen">
@@ -27,17 +39,28 @@ const Signup = () => {
                     </div>
                     <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
                         <div className="card-body">
-                            <form onSubmit={handleSignup} >
+                            <form onSubmit={handleSignup}>
                                 <label className="label">Email</label>
-                                <input name='email' type="email" className="input" placeholder="Email" />
+                                <input
+                                    name="email"
+                                    type="email"
+                                    className="input"
+                                    placeholder="Email"
+                                />
                                 <label className="label">Password</label>
-                                <input name='password' type="password" className="input" placeholder="Password" />
-                                <div><a className="link link-hover">Forgot password?</a></div>
+                                <input
+                                    name="password"
+                                    type="password"
+                                    className="input"
+                                    placeholder="Password"
+                                />
+                                <div>
+                                    <a className="link link-hover">Forgot password?</a>
+                                </div>
                                 <button className="btn btn-neutral mt-4">Sign Up</button>
                             </form>
-                            {
-                                errorMessege && <p className='text-red-500'>{errorMessege}</p>
-                            }
+                            {errorMessege && <p className="text-red-500">{errorMessege}</p>}
+                            {success && <p className="text-green-500">Success</p>}
                         </div>
                     </div>
                 </div>
@@ -45,5 +68,4 @@ const Signup = () => {
         </div>
     );
 };
-
 export default Signup;
