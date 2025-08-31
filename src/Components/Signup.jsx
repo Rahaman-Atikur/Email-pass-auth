@@ -2,6 +2,7 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import React, { useState } from "react";
 import { auth } from "../firebase";
 import { FaEye } from "react-icons/fa";
+import { FaEyeSlash } from "react-icons/fa";
 const Signup = () => {
   const [errorMessege, setErrorMessege] = useState("");
   const [success, setSuccess] = useState(false);
@@ -11,8 +12,12 @@ const Signup = () => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
+    const terms = e.target.terms.checked;
     setErrorMessege("");
     setSuccess(true);
+    if (!terms) {
+      setErrorMessege('Please Accept My Terms and Conditions');
+    }
     //Password Validation
     const regExpression = /^\d{6}$/;
     if (regExpression.test(password) === false) {
@@ -50,8 +55,8 @@ const Signup = () => {
                 <label className="label">Password</label>
                 <div className="relative">
                   <input
-                    name={}
-                    type="password"
+                    name='password'
+                    type={showPassword ? 'text' : 'password'}
                     className="input"
                     placeholder="Password"
                   />
@@ -60,12 +65,18 @@ const Signup = () => {
                     onClick={() => setShowPassword(!showPassword)}
                     className="btn btn-xs absolute top-2 right-6"
                   >
-                    <FaEye />
+                    {
+                      showPassword ? <FaEyeSlash /> : <FaEye />
+                    }
+
                   </button>
                 </div>
                 <div>
                   <a className="link link-hover">Forgot password?</a>
                 </div>
+                <input name="terms" type="checkbox" defaultChecked className="checkbox" />
+                Accept Terms and Conditions <br />
+
                 <button className="btn btn-neutral mt-4">Sign Up</button>
               </form>
               {errorMessege && <p className="text-red-500">{errorMessege}</p>}
