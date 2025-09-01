@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { auth } from "../firebase";
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
+import { NavLink } from "react-router";
 const Signup = () => {
   const [errorMessege, setErrorMessege] = useState("");
   const [success, setSuccess] = useState(false);
@@ -78,6 +79,7 @@ const Signup = () => {
                 Accept Terms and Conditions <br />
 
                 <button className="btn btn-neutral mt-4">Sign Up</button>
+                <p>Already an account ! Please <NavLink to='/login'>Login</NavLink> </p>
               </form>
               {errorMessege && <p className="text-red-500">{errorMessege}</p>}
               {success && <p className="text-green-500">Success</p>}
