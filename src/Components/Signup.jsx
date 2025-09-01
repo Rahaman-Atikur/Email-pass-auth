@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
 import React, { useState } from "react";
 import { auth } from "../firebase";
 import { FaEye } from "react-icons/fa";
@@ -29,6 +29,12 @@ const Signup = () => {
       .then((result) => {
         console.log(result);
         setSuccess(true);
+        // Validate User Email
+        sendEmailVerification(auth.currentUser)
+          .then(() => {
+            setSuccess(true);
+            alert('We have sent you a verification Link');
+          })
       })
       .catch((error) => {
         console.log(error);
@@ -79,7 +85,7 @@ const Signup = () => {
                 Accept Terms and Conditions <br />
 
                 <button className="btn btn-neutral mt-4">Sign Up</button>
-                <p>Already an account ! Please <NavLink to='/login'>Login</NavLink> </p>
+                <p>Already an account ! Please <NavLink className='text-blue-500 underline' to='/login'>Login</NavLink> </p>
               </form>
               {errorMessege && <p className="text-red-500">{errorMessege}</p>}
               {success && <p className="text-green-500">Success</p>}
